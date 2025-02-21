@@ -60,7 +60,7 @@ class HandDetector:
 
     def fingers_up(self):
 
-        if len(self.land_mark_list) != 0
+        if len(self.land_mark_list) != 0:
             fingers_counter = []
 
             for tip_id in range(1, 5):
