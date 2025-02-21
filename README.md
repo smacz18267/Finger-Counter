@@ -29,3 +29,16 @@ Clone the repository:
 ```bash
 git clone https://github.com/your-username/Finger-Detection-and-Counter.git
 cd Finger-Detection-and-Counter
+
+```bash
+pip install opencv-python mediapipe
+
+## File Structure
+Finger-Detection/
+├── hand_module.py    # Hand tracking and finger counting module
+├── module_test.py    # Main script to run the finger detection
+└── README.md         # Documentation
+
+## Controls
+- Show any number of fingers, and the system will display the detected count
+- Press 'q' to exit the program0
