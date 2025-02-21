@@ -21,6 +21,8 @@ class HandDetector:
         self.mp_drawing_utils = mp.solutions.drawing_utils
         self.mp_drawing_styles = mp.solutions.drawing_styles
 
+        self.tips_ids = [4, 8, 12, 16, 20]
+
     def find_hands(self, img, draw=True):
         self.result = self.hands.process(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
 
@@ -35,5 +37,46 @@ class HandDetector:
                         self.mp_drawing_styles.get_default_hand_connections_style()
                     )
         return img 
+
+    def find_position(self, img, hand_index=0, draw=True):
+        self.land_mark_list = []
+    
+        if self.result.multi_hand_landmarks:
+            interest_hand = self.result.multi_hand_landmarks[hand_index]
+    
+            for id, landmark in enumerate(interest_hand.landmark):
+    
+                h, w, c = img.shape
+    
+                cx, cy = int(landmark.x * w), int(landmark.y * h)
+    
+                self.land_mark_list.append([id, cx, cy])
+    
+                if draw:
+                    cv2.circle(img, (cx, cy), 10, (250, 0, 0), cv2.FILLED)
+    
+        return self.land_mark_list
+
+
+    def fingers_up(self):
+
+        if len(self.land_mark_list) != 0
+            fingers_counter = []
+
+            for tip_id in range(1, 5):
+                if self.land_mark_list[self.tips_ids[tip_id]][2] < self.land_mark_list[self.tips_ids[tip_id] - 2][2]:
+                    fingers_counter.append(1)
+                else:
+                    fingers_counter.append(0)
+    
+            if self.land_mark_list[self.tips_ids[0]][1] > self.land_mark_list[self.tips_ids[0] - 1][1]:
+                fingers_counter.append(1)
+            else:
+                fingers_counter.append(0)
+            return fingers_counter
+        
+        return None
+
+
                 
                   
