@@ -27,5 +27,5 @@ Ensure you have the following dependencies installed:
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/Finger-Detection.git
-cd Finger-Detection
+git clone https://github.com/your-username/Finger-Detection-and-Counter.git
+cd Finger-Detection-and-Counter
