@@ -37,10 +37,12 @@ pip install opencv-python mediapipe
 ```
 
 ## File Structure
+```
 Finger-Detection/
 ├── hand_module.py    # Hand tracking and finger counting module
 ├── module_test.py    # Main script to run the finger detection
 └── README.md         # Documentation
+```
 
 ## Controls
 - Show any number of fingers, and the system will display the detected count
