@@ -31,7 +31,7 @@ git clone https://github.com/your-username/Finger-Detection-and-Counter.git
 cd Finger-Detection-and-Counter
 
 ```
-
+Installing the dependencies:
 ```bash
 pip install opencv-python mediapipe
 ```
