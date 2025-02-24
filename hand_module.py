@@ -27,6 +27,7 @@ class HandDetector:
         self.result = self.hands.process(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
 
         if self.result.multi_hand_landmarks:
+            self.hand_label = self.result.multi_handedness[0].classification[0].label
             if draw:
                 for hand_landmark in self.result.multi_hand_landmarks:
                     self.mp_drawing_utils.draw_landmarks(
@@ -36,7 +37,7 @@ class HandDetector:
                         self.mp_drawing_styles.get_default_hand_landmarks_style(),
                         self.mp_drawing_styles.get_default_hand_connections_style()
                     )
-        return img 
+        return img
 
     def find_position(self, img, hand_index=0, draw=True):
         self.land_mark_list = []
@@ -59,7 +60,6 @@ class HandDetector:
 
 
     def fingers_up(self):
-
         if len(self.land_mark_list) != 0:
             fingers_counter = []
 
@@ -68,14 +68,30 @@ class HandDetector:
                     fingers_counter.append(1)
                 else:
                     fingers_counter.append(0)
-    
-            if self.land_mark_list[self.tips_ids[0]][1] > self.land_mark_list[self.tips_ids[0] - 1][1]:
-                fingers_counter.append(1)
+                    
+            thumb_tip_x = self.land_mark_list[self.tips_ids[0]][1]
+            thumb_ip_x = self.land_mark_list[self.tips_ids[0] - 1][1]
+
+            if hasattr(self, 'hand_label'):
+                if self.hand_label == "Right":
+                    if thumb_tip_x < thumb_ip_x:
+                        fingers_counter.insert(0, 1)
+                    else:
+                        fingers_counter.insert(0, 0)
+                else: 
+                    if thumb_tip_x > thumb_ip_x:
+                        fingers_counter.insert(0, 1)
+                    else:
+                        fingers_counter.insert(0, 0)
             else:
-                fingers_counter.append(0)
+                if thumb_tip_x < thumb_ip_x:
+                    fingers_counter.insert(0, 1)
+                else:
+                    fingers_counter.insert(0, 0)
+
             return fingers_counter
-        
         return None
+
 
 
                 
